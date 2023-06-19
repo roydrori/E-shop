@@ -5,6 +5,9 @@ import mongoose from 'mongoose';
 import seedRouter from './routes/seedRouter.js';
 import ProductRouter from './routes/productRoutes.js';
 import UserRouter from './routes/UserRouter.js';
+import OrderRouter from './routes/orderRouter.js';
+import Order from './models/OrderModel.js';
+
 
 dotenv.config();
 
@@ -13,7 +16,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use('/signin', UserRouter);
+app.use('/api/v1/orders', OrderRouter);
+app.use('/api/v1/users', UserRouter);
 app.use('/api/v1/seed', seedRouter);
 app.use('/api/v1/products', ProductRouter);
 

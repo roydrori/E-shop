@@ -1,13 +1,24 @@
 import { createContext, useReducer } from 'react';
+import { USER_SIGNIN, USER_SIGNOUT } from './action';
 
 export const Store = createContext();
 
 const initialState = {
   cart: {
-    cartItems: localStorage.getItem('cartItems')?
-    JSON.parse(localStorage.getItem('cartItems')): []
+    cartItems: localStorage.getItem('cartItems')
+      ? JSON.parse(localStorage.getItem('cartItems'))
+      : [],
+    shippingAddress: localStorage.getItem('shippingAddress')
+      ? JSON.parse(localStorage.getItem('shippingAddress'))
+      : {},
+    paymentMethod: localStorage.getItem('paymentMethod')
+      ? localStorage.getItem('paymentMethod')
+      : '',
   },
-}
+  userInfo: localStorage.getItem('userInfo')
+    ? JSON.parse(localStorage.getItem('userInfo'))
+    : null,
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -31,8 +42,16 @@ const reducer = (state, action) => {
       );
       return { ...state, cart: { ...state.cart, cartItems } };
     }
+    case 'CLEAR_CART' :{
+      return {...state, cart: {...state.cart, cartItems :[]} }
+    }
 
-    
+    case 'SAVE_SHIPPING_ADDRESS' : {
+      return {...state, cart: {...state.cart, shippingAdress: action.payload} }
+    }
+    case 'SAVE_PAYMENT_METHOD': {
+      return{...state, cart:{...state.cart, paymentMethod: action.payload} };
+    }
     
     case 'REORDER_CART_ITEMS': {
       if (!action.payload.destination) {
@@ -46,6 +65,16 @@ const reducer = (state, action) => {
         ...state,
         cart: { ...state.cart, cartItems: newCartItems },
       };
+    }
+
+    case 'USER_SIGNUP':{
+      return{...state,  }
+    }
+    case USER_SIGNIN:{
+      return {...state, userInfo: action.payload}
+    }
+    case USER_SIGNOUT:{
+      return {...state, userInfo : null, cart : {cartItems: [] , shippingAddress: {}, paymentMethod:''}}
     }
     default:
       return state;

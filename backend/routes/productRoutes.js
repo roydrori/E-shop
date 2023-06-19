@@ -29,12 +29,4 @@ ProductRouter.get('/:id', async (req, res) => {
     res.status(404).send({ message: 'Product was not found' });
   }
 });
-
-
-// ProductRouter.get('/', async (req, res) => {
-//   await Product.deleteMany({});
-//   const createdProducts = await Product.insertMany(data.products);
-//   res.send({ createdProducts });
-// });
-
 export default ProductRouter;

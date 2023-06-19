@@ -13,7 +13,7 @@
   function CartPage () {
 
     
-    const { state, dispatch: cxtDispatch } = useContext(Store)
+    const { state, dispatch: ctxDispatch } = useContext(Store)
     
     const navigate = useNavigate();
     
@@ -27,13 +27,13 @@
         window.alert('Sorry. Product is out of stock')
         return
       }
-      cxtDispatch({type : "ADD_TO_CART",  payload: { ...item,  quantity }})
+      ctxDispatch({type : "ADD_TO_CART",  payload: { ...item,  quantity }})
     }
 
     const removeCartHandler = async (item) => {
       // const { data } = await axios.get(`/api/v1/product/${item._id}`)
 
-      cxtDispatch({type : "REMOVE_FROM_CART",  payload: item})
+      ctxDispatch({type : "REMOVE_FROM_CART",  payload: item})
     }
 
 
@@ -42,7 +42,7 @@
     }
 
     const DragEndHandle = (result) => {
-      cxtDispatch({type: "REORDER_CART_ITEMS", payload: result});
+      ctxDispatch({type: "REORDER_CART_ITEMS", payload: result});
     };
 
     return (

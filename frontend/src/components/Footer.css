@@ -1,0 +1,13 @@
+.full-footer {
+    display: none;
+  }
+  
+  .sticky-section {
+    position: sticky;
+    bottom: 0;
+  }
+  
+  .show-full-footer {
+    display: block;
+  }
+  
