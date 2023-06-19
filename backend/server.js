@@ -13,6 +13,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -25,6 +26,11 @@ app.use('/api/v1/products', ProductRouter);
 app.use((err,req,res, next) => {
   res.status(500).send({message: err.message})
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING)
