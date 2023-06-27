@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react'
 import OrderHistory from '../components/OrderHistory';
-import {Loading, MessageBox} from '../Imports';
+import {Loading, MessageBox, useNavigate} from '../Imports';
 
 import { Store, axios, getError, toast, Helmet } from '../Imports';
 
@@ -25,12 +25,13 @@ const HistoryOrderPage = () => {
         allOrders: null,
         error: ''
     });
-
+    const navigate = useNavigate();
     const { state, dispatch: ctxDispatch } = useContext(Store);
     const { userInfo } = state;
 
     useEffect(() => {
         const fetchOrders = async () => {
+            if(userInfo)
             try {
                 dispatch({ type: "CREATE_REQUEST" })
                 const { data } = await axios.get(`api/v1/orders/history/${userInfo._id}`, {
@@ -41,6 +42,7 @@ const HistoryOrderPage = () => {
                 dispatch({ type: "CREATE_FAILED", payload: error })
                 // toast.error(getError(error));
             }
+            else navigate('/signin')
         };
 
         fetchOrders();
