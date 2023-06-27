@@ -31,13 +31,11 @@ const HistoryOrderPage = () => {
 
     useEffect(() => {
         const fetchOrders = async () => {
-            console.log("ID:", userInfo._id)
             try {
                 dispatch({ type: "CREATE_REQUEST" })
                 const { data } = await axios.get(`api/v1/orders/history/${userInfo._id}`, {
                     headers: { authorization: `Bearer ${userInfo.token}` },
                 });
-                console.log(data);
                 dispatch({ type: "CREATE_SUCCEEDED", payload: data })
             } catch (error) {
                 dispatch({ type: "CREATE_FAILED", payload: error })
@@ -61,7 +59,6 @@ const HistoryOrderPage = () => {
                 <h1>All Orders</h1>
                 {allOrders.map((order) => (
                     <div key={order._id}>
-                        <p>Order ID: {order._id}</p>
                         <OrderHistory order={order} />
                     </div>
                 ))}
