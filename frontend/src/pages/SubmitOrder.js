@@ -37,7 +37,7 @@ function SubmitOrderPage() {
             dispatch({ type: 'CREATE_REQUEST' })
 
             const { data } = await axios.post(
-                '/api/v1/orders',
+                '/api/v1/orders/',
                 {
                     orderItems: cart.cartItems,
                     shippingAddress: cart.shippingAddress,
