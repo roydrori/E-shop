@@ -1,5 +1,6 @@
 import NavBar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
+import SearchBox from './SearchBox';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Badge, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -38,6 +39,9 @@ function CustomNavBar() {
             </LinkContainer> : null
         }
 
+        <nav className="d-flex align-items-center w-50 ms-auto">
+          <SearchBox />
+        </nav>
         <Nav className="ms-auto w-50 d-flex justify-content-end">
           <Link to="/cart" className="nav-link">
             <i className="fas fa-shopping-cart"> </i>

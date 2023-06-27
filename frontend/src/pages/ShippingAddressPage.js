@@ -5,29 +5,39 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { Form, Button } from 'react-bootstrap';
 
 const ShippingAddressPage = () => {
-
+  // Accessing React hooks for navigation and global state management
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo, cart: { shippingAddress } } = state;
 
-  const [name, setName] = useState(shippingAddress.name || '');
+  // Extracting user info and shipping address from global state
+  const {
+    userInfo,
+    cart: { shippingAddress },
+  } = state;
+
+  // Initializing state variables for shipping address fields
+  const [fullName, setFullName] = useState(shippingAddress.fullName || '');
   const [address, setAddress] = useState(shippingAddress.address || '');
   const [city, setCity] = useState(shippingAddress.city || '');
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || '');
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress.postalCode || ''
+  );
   const [country, setCountry] = useState(shippingAddress.country || '');
 
+  // useEffect hook to check if the user is signed in, redirecting if not
   useEffect(() => {
     if (!userInfo) {
       navigate('/signin?redirect=/shipping');
     }
   }, [userInfo, navigate]);
 
+  // Function to handle form submission
   const submitHandler = (e) => {
     e.preventDefault();
     ctxDispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
+      type: "SAVE_SHIPPING_ADDRESS",
       payload: {
-        name,
+        fullName,
         address,
         city,
         postalCode,
@@ -37,7 +47,7 @@ const ShippingAddressPage = () => {
     localStorage.setItem(
       'shippingAddress',
       JSON.stringify({
-        name,
+        fullName,
         address,
         city,
         postalCode,
@@ -49,16 +59,16 @@ const ShippingAddressPage = () => {
 
   return (
     <div>
-      <title title='Shipping Address' />
+      <title>Shipping Address</title>
       <CheckoutSteps step1 step2 />
       <div className="container small-container">
         <h1 className="my-3">Shipping Address</h1>
         <Form onSubmit={submitHandler}>
-          <Form.Group className="mb-3" controlId="name">
+          <Form.Group className="mb-3" controlId="fullName">
             <Form.Label>Full Name</Form.Label>
             <Form.Control
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               required
             />
           </Form.Group>
@@ -102,6 +112,6 @@ const ShippingAddressPage = () => {
         </Form>
       </div>
     </div>
-  )
-}
+  );
+};
 export default ShippingAddressPage;

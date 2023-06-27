@@ -5,6 +5,9 @@ import Col from 'react-bootstrap/Col';
 import ProductItem from '../components/ProductItem';
 import Loading from '../components/Loading';
 import MessageBox from '../components/MessageBox';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import Footer from '../components/Footer';
 //TODO: aggregate import into single js file!!
 
 //TODO: rxport all caase string into const!!
@@ -22,6 +25,13 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+};
+const responsive = {
+  main: {
+    breakpoint: { max: 4000, min: 0 },
+    items: 1,
+    slidesToSlide: 1, // optional, default to 1.
+  },
 };
 
 const HomePage = () => {
@@ -45,9 +55,56 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Products</h1>
+    <div className='carousel'>
+      <Carousel
+        swipeable={false}
+        draggable={false}
+        showDots={false}
+        responsive={responsive}
+        ssr={true} // means to render carousel on server-side.
+        infinite={true}
+        keyBoardControl={true}
+        autoPlay={true}
+        autoPlaySpeed={3000}
+        customTransition="all .5"
+        transitionDuration={500}
+        containerClass="carousel-container"
+        removeArrowOnDeviceType={'main'}
+        dotListClass="custom-dot-list-style"
+        itemClass="carousel-item-padding-40-px"
+      >
+        <div>
+          <img
+            className="carousel-image"
+            src="https://m.media-amazon.com/images/I/61PRFOFwuRL._SX3000_.jpg"
+            alt="carousel"
+          />
+        </div>
+        <div>
+          <img
+            className="carousel-image"
+            src="https://m.media-amazon.com/images/I/71Lv8RkYimL._SX3000_.jpg"
+            alt="carousel"
+          />
+        </div>
+        <div>
+          <img
+            className="carousel-image"
+            src="https://m.media-amazon.com/images/I/71tMlGMklPL._SX3000_.jpg"
+            alt="carousel"
+          />
+        </div>
+        <div>
+          <img
+            className="carousel-image"
+            src="https://m.media-amazon.com/images/I/71rzmcWTcTL._SX3000_.jpg"
+            alt="carousel"
+          />
+        </div>
+      </Carousel>
+
       <div className="product-list">
+        
         {loading ? (
           <Loading />
         ) : error ? (
@@ -62,6 +119,7 @@ const HomePage = () => {
           </Row>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -9,11 +9,13 @@ import SigninPage from './pages/SigninPage';
 import { ToastContainer } from 'react-toastify';
 import ShippingAddressPage from './pages/ShippingAddressPage';
 import 'react-toastify/dist/ReactToastify.css';
-import Footer from './components/Footer';
 import SignupPage from './pages/signupPage';
 import { PaymentPage } from './Imports';
 import SubmitOrderPage from './pages/SubmitOrder';
 import OrderPage from './pages/OrderPage';
+import SearchPage from './pages/SearchPage';
+import HistoryOrderPage from './pages/OrderHistoryPage';
+import ProfilePage from './pages/ProfilePage';
 
 
 
@@ -39,11 +41,13 @@ function App() {
               <Route path='/shipping' element={<ShippingAddressPage/>}/>
               <Route path='/payment' element={<PaymentPage/>}/>
               <Route path='/placeorder' element={<SubmitOrderPage/>}/>
-              <Route path='/order/:id' element={<OrderPage/>}/>
+              <Route path='/orders/:orderId' element={<OrderPage/>}/>
+              <Route path="/orderhistory" element={<HistoryOrderPage/>} />
+              <Route path='/search' element={<SearchPage/>}/>
+              <Route path='/profile' element={<ProfilePage/>}/>
             </Routes>
           </Container>
         </main>
-        <Footer/>
       </div>
     </BrowserRouter>
   );

@@ -8,7 +8,7 @@ import './index.css';
 import { HelmetProvider } from 'react-helmet-async';
 import { StoreProvider } from './store';
 
-axios.defaults.baseURL = 'https://e-shop-backend-vfj5.onrender.com';
+axios.defaults.baseURL = 'http://localhost:5000';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
