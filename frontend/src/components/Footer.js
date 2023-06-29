@@ -13,7 +13,6 @@ function Footer() {
             const fullFooter = fullFooterRef.current;
 
             if (stickySection && fullFooter) {
-                const stickySectionOffset = stickySection.offsetTop;
                 const fullFooterOffset = fullFooter.offsetTop;
 
                 if (window.pageYOffset >= fullFooterOffset - window.innerHeight) {
@@ -37,9 +36,6 @@ function Footer() {
                     <span>Get connected with me on social networks:</span>
                 </div>
                 <div>
-                    <a href='/' className='me-4 text-reset'>
-                        <MDBIcon color='secondary' fab icon='google' />
-                    </a>
                     <a href='https://www.linkedin.com/in/roy-drori-652596240/' className='me-4 text-reset'>
                         <MDBIcon color='secondary' fab icon='linkedin' />
                     </a>
@@ -58,7 +54,7 @@ function Footer() {
                             </h6>
                             <p>
                                 Hi, I'm Roy Drori, a software developer on a continuous journey of progress.
-                                With 1.6 years of experience, I'm currently focused on mastering React.
+                                With 1.4 years of experience, I'm currently focused on mastering React.
                             </p>
                         </MDBCol>
 
@@ -94,18 +90,8 @@ function Footer() {
                                 </a>
                             </p>
                             <p>
-                                <a href='#!' className='text-reset'>
-                                    Settings
-                                </a>
-                            </p>
-                            <p>
-                                <a href='#!' className='text-reset'>
+                                <a href='/orderhistory' className='text-reset'>
                                     Orders
-                                </a>
-                            </p>
-                            <p>
-                                <a href='#!' className='text-reset'>
-                                    Help
                                 </a>
                             </p>
                         </MDBCol>

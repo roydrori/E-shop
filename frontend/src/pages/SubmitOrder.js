@@ -24,15 +24,15 @@ function SubmitOrderPage() {
     const { state, dispatch: ctxDispatch } = useContext(Store)
     const { cart, userInfo } = state
     const { paymentMethod } = cart
-
-    const [{ loading, error }, dispatch] = useReducer(reducer, {
+    const savedShippingAddress = JSON.parse(localStorage.getItem('shippingAddress'));
+    const [{ loading}, dispatch] = useReducer(reducer, {
         loading: false,
-        error: ''
     })
 
     const navigate = useNavigate()
 
     const submitOrderHandler = async () => {
+        
         try {
             dispatch({ type: 'CREATE_REQUEST' })
 
@@ -40,7 +40,7 @@ function SubmitOrderPage() {
                 '/api/v1/orders/',
                 {
                     orderItems: cart.cartItems,
-                    shippingAddress: cart.shippingAddress,
+                    shippingAddress: savedShippingAddress,
                     paymentMethod: cart.paymentMethod,
                     itemsPrice: cart.itemsPrice,
                     shippingPrice: cart.shippingPrice,
@@ -55,12 +55,12 @@ function SubmitOrderPage() {
             dispatch({ type: 'CREATE_SECCEEDED' })
             ctxDispatch({ type: 'CLEAR_CART' })
             localStorage.removeItem('cartItems')
-            console.log('order id :::' ,data.order._id)
             navigate(`/orders/${data.order._id}`)
         } catch (err) {
             dispatch({ type: 'CREATE_FAILED' })
             toast.error(getError(err))
         }
+        
     }
 
     const round2 = num => Math.round(num * 100 + Number.EPSILON) / 100
@@ -75,10 +75,20 @@ function SubmitOrderPage() {
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice
 
     useEffect(() => {
-        if (!paymentMethod) {
-            navigate('/payment')
+        if (!userInfo)
+            navigate('/signin');
+        if (!savedShippingAddress)
+            navigate('/shipping');
+        else {
+            console.log(savedShippingAddress.fullName);
+            console.log(savedShippingAddress.address);
+            console.log(savedShippingAddress.country);
         }
-    }, [navigate, paymentMethod])
+        if (!paymentMethod) {
+            navigate('/payment');
+        }
+    }, [navigate, paymentMethod, userInfo, savedShippingAddress]);
+    
 
     return (
         <div>
@@ -91,17 +101,17 @@ function SubmitOrderPage() {
                         <Card.Body>
                             <Card.Title>Shipping</Card.Title>
                             <Card.Text>
-                                <strong>Name:</strong>
-                                {cart.shippingAddress.fullName}
+                                <strong>Name: </strong>
+                                {savedShippingAddress.fullName}
                                 <br />
-                                <strong>Address:</strong>
-                                {cart.shippingAddress.address}
+                                <strong>Address: </strong>
+                                {savedShippingAddress.address}
                                 <br />
-                                <strong>City:</strong>
-                                {cart.shippingAddress.city}
+                                <strong>City: </strong>
+                                {savedShippingAddress.city}
                                 <br />
-                                <strong>Country:</strong>
-                                {cart.shippingAddress.country}
+                                <strong>Country: </strong>
+                                {savedShippingAddress.country}
                             </Card.Text>
                         </Card.Body>
                     </Card>
